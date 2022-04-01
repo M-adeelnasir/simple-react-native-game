@@ -1,9 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react'
 import { StyleSheet, View, ImageBackground } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import StartGame from './screens/StartGame';
+import Game from './screens/Game';
 
 export default function App() {
+
+  //dunamically switch to another screen
+  const [userNumber, setUserNumber] = useState();
+
+  const handleConfirmNumber = (num) => {
+    setUserNumber(num)
+  }
+
+  let screen = <StartGame handleConfirmNumber={handleConfirmNumber} />
+
+  if (userNumber) {
+    screen = <Game />
+  }
+
   return (
     // <View style={styles.bgColor}>
     //   <StartGame />
@@ -17,7 +33,8 @@ export default function App() {
         resizeMode='cover'
 
       >
-        <StartGame />
+        {screen}
+
       </ImageBackground>
 
     </LinearGradient>

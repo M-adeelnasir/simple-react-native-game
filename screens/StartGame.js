@@ -1,17 +1,38 @@
 import React, { useState } from 'react'
-import { TextInput, View, StyleSheet } from 'react-native'
+import { TextInput, View, StyleSheet, Alert } from 'react-native'
 import PrimaryButton from '../components/PrimaryButton'
 
 
-const StartGame = () => {
+const StartGame = ({ handleConfirmNumber }) => {
     const [number, setNumber] = useState('')
 
     const handleChange = (text) => {
+        console.log(text);
         setNumber(text)
     }
 
+    const handleOkayPress = () => {
+        setNumber('')
+    }
+
     const handleConfirm = () => {
-        console.log("cliekes");
+        console.log("Clicked");
+        const chosenNumber = parseInt(number);
+        //is not a number OR
+        // is less the 0 OR
+        //is greater then 99
+
+        if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber >= 99) {
+            Alert.alert(
+                'Invalid Number',
+                "Number Should be in between 1 to 99",
+                [{ text: 'Okay', style: 'destructive', onPress: handleOkayPress }]
+            )
+            return
+        }
+        console.log("valid number");
+        handleConfirmNumber(chosenNumber)
+
     }
 
     return (
@@ -25,10 +46,10 @@ const StartGame = () => {
             />
             <View style={styles.buttonContainer}>
                 <View style={styles.btn}>
-                    <PrimaryButton onPress={handleConfirm}>Reset</PrimaryButton>
+                    <PrimaryButton >Reset</PrimaryButton>
                 </View>
                 <View style={styles.btn}>
-                    <PrimaryButton>Confirm</PrimaryButton>
+                    <PrimaryButton onPress={handleConfirm}>Confirm</PrimaryButton>
                 </View>
             </View>
         </View>
