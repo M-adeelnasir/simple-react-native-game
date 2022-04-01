@@ -1,16 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TextInput, View, StyleSheet } from 'react-native'
-import { shadowColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 import PrimaryButton from '../components/PrimaryButton'
 
 
 const StartGame = () => {
+    const [number, setNumber] = useState('')
+
+    const handleChange = (text) => {
+        setNumber(text)
+    }
+
+    const handleConfirm = () => {
+        console.log("cliekes");
+    }
+
     return (
         <View style={styles.inputContainer}>
-            <TextInput style={styles.numberInput} maxLength={2} keyboardType='number-pad' />
+            <TextInput
+                style={styles.numberInput}
+                maxLength={2}
+                keyboardType='number-pad'
+                value={number}
+                onChangeText={handleChange}
+            />
             <View style={styles.buttonContainer}>
                 <View style={styles.btn}>
-                    <PrimaryButton>Reset</PrimaryButton>
+                    <PrimaryButton onPress={handleConfirm}>Reset</PrimaryButton>
                 </View>
                 <View style={styles.btn}>
                     <PrimaryButton>Confirm</PrimaryButton>
